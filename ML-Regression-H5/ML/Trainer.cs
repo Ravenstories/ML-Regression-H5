@@ -14,8 +14,12 @@ namespace ML_Regression_H5.ML
                 Console.WriteLine($"Failed to find training data file {trainingFileName}");
                 return;
             }
-
+            
+            //var sampleData = mlContext.Data.LoadFromTextFile<EmploymentHistory>(trainingFileName, ',');
             var trainingDataView = mlContext.Data.LoadFromTextFile<EmploymentHistory>(trainingFileName, ',');
+            
+            var dataSplit = mlContext.Data.TrainTestSplit(trainingDataView, testFraction: 0.2);
+            
 
             var dataProcessPipeline = mlContext.Transforms.CopyColumns("Label", nameof(EmploymentHistory.durationInMonths))
                 .Append(mlContext.Transforms.NormalizeMeanVariance(nameof(EmploymentHistory.isMarried)))
@@ -32,13 +36,13 @@ namespace ML_Regression_H5.ML
 
 
             var trainer = mlContext.Regression.Trainers.Sdca(labelColumnName: "Label", featureColumnName: "Features");
-
             var trainingPipeline = dataProcessPipeline.Append(trainer);
-            var trainedModel = trainingPipeline.Fit(trainingDataView);
+            
+            ITransformer trainedModel = trainingPipeline.Fit(dataSplit.TrainSet);
 
-            mlContext.Model.Save(trainedModel, trainingDataView.Schema, Constants.modelFile);
+            mlContext.Model.Save(trainedModel, dataSplit.TrainSet.Schema, Constants.modelFile);
 
-            var testSetTransform = trainedModel.Transform(trainingDataView);
+            var testSetTransform = trainedModel.Transform(dataSplit.TestSet);
 
             var modelMetrics = mlContext.Regression.Evaluate(testSetTransform);
 
@@ -46,7 +50,7 @@ namespace ML_Regression_H5.ML
                 $"Mean Absolute Error: {modelMetrics.MeanAbsoluteError:#.##}{Environment.NewLine}" +
                 $"Mean Squared Error: {modelMetrics.MeanSquaredError:#.##}{Environment.NewLine}" +
                 $"RSquared: {modelMetrics.RSquared:0.##}{Environment.NewLine}" +
-                $"Root Mean Squared Error: {modelMetrics.RootMeanSquaredError:#.##}");
+                $"Root Mean Squared Error: {modelMetrics.RootMeanSquaredError:#.##} \n");
         }
     }
 }

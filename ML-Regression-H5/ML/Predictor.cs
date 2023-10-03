@@ -10,13 +10,9 @@ namespace ML_Regression_H5.ML
     {
         public void Predict(string inputData)
         {
-            if (!File.Exists(Constants.modelFile))
+            if (!File.Exists(inputData))
             {
-                Console.WriteLine($"Failed to find model at {Constants.modelFile}");
-                return;
-            }else if (!File.Exists(Constants.sampleData))
-            {
-                Console.WriteLine($"Failed to find model at {Constants.sampleData}");
+                Console.WriteLine($"Failed to find model at {inputData}");
                 return;
             }
 
@@ -34,16 +30,12 @@ namespace ML_Regression_H5.ML
 
             var predictionEngine = mlContext.Model.CreatePredictionEngine<EmploymentHistory, EmploymentHistoryPrediction>(mlModel);
 
-            // Læs JSON-data fra filen
             var json = File.ReadAllText(inputData);
-            // Deserialiser JSON til EmploymentHistory objekt
             var employmentHistory = JsonConvert.DeserializeObject<EmploymentHistory>(json);
-            // Udfør forudsigelsen
             var prediction = predictionEngine.Predict(employmentHistory);
 
-
             Console.WriteLine($"Based on input JSON:{Environment.NewLine}{json}{Environment.NewLine}");
-            Console.WriteLine($"The employee is predicted to work {prediction.DurationInMonths} months");
+            Console.WriteLine($"The employee is predicted to work {prediction.DurationInMonths:#.##} months"); 
         }
     }
 }
