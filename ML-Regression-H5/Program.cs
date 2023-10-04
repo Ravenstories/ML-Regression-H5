@@ -7,7 +7,7 @@ internal class Program
     {
         while (true)
         {
-            Console.WriteLine("Please provide a valid option predict/train");
+            Console.WriteLine("Please provide a valid option predict/train/exit");
 
             var option = Console.ReadLine();
 
@@ -26,7 +26,7 @@ internal class Program
                     new Trainer().Train(ML_Regression_H5.Common.Constants.sampleData);
                     break;
                 case "exit":
-                //end program
+                    return;
 
                 default:
                     Console.WriteLine($"{args[0]} is an invalid option");

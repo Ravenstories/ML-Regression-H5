@@ -19,7 +19,6 @@ namespace ML_Regression_H5.ML
             var trainingDataView = mlContext.Data.LoadFromTextFile<EmploymentHistory>(trainingFileName, ',');
             
             var dataSplit = mlContext.Data.TrainTestSplit(trainingDataView, testFraction: 0.2);
-            
 
             var dataProcessPipeline = mlContext.Transforms.CopyColumns("Label", nameof(EmploymentHistory.durationInMonths))
                 .Append(mlContext.Transforms.NormalizeMeanVariance(nameof(EmploymentHistory.isMarried)))

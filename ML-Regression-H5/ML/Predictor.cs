@@ -35,7 +35,7 @@ namespace ML_Regression_H5.ML
             var prediction = predictionEngine.Predict(employmentHistory);
 
             Console.WriteLine($"Based on input JSON:{Environment.NewLine}{json}{Environment.NewLine}");
-            Console.WriteLine($"The employee is predicted to work {prediction.DurationInMonths:#.##} months"); 
+            Console.WriteLine($"The employee is predicted to work {prediction.DurationInMonths:#.##} months");
         }
     }
 }
