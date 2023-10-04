@@ -15,6 +15,8 @@ namespace ML_Regression_H5.ML
                 Console.WriteLine($"Failed to find model at {inputData}");
                 return;
             }
+            var json = File.ReadAllText(inputData);
+            var employmentHistory = JsonConvert.DeserializeObject<EmploymentHistory>(json);
 
             ITransformer mlModel;
 
@@ -29,13 +31,11 @@ namespace ML_Regression_H5.ML
             }
 
             var predictionEngine = mlContext.Model.CreatePredictionEngine<EmploymentHistory, EmploymentHistoryPrediction>(mlModel);
-
-            var json = File.ReadAllText(inputData);
-            var employmentHistory = JsonConvert.DeserializeObject<EmploymentHistory>(json);
             var prediction = predictionEngine.Predict(employmentHistory);
 
             Console.WriteLine($"Based on input JSON:{Environment.NewLine}{json}{Environment.NewLine}");
-            Console.WriteLine($"The employee is predicted to work {prediction.durationInMonths:#.##} months");
+            Console.WriteLine($"The employee is predicted to work {prediction.durationInMonths:#.##} months");  
+            
         }
     }
 }

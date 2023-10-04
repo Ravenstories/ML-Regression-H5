@@ -15,7 +15,6 @@ namespace ML_Regression_H5.ML
                 return;
             }
             
-            //var sampleData = mlContext.Data.LoadFromTextFile<EmploymentHistory>(trainingFileName, ',');
             var trainingDataView = mlContext.Data.LoadFromTextFile<EmploymentHistory>(trainingFileName, ',');
             
             var dataSplit = mlContext.Data.TrainTestSplit(trainingDataView, testFraction: 0.2);

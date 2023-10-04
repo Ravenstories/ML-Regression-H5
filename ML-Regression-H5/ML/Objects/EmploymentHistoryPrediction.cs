@@ -4,7 +4,7 @@ namespace ML_Regression_H5.ML.Objects
 {
     internal class EmploymentHistoryPrediction
     {
-        [ColumnName("durationInMonths")]
+        [ColumnName("Score")]
         public float durationInMonths { get; set; }
     }
 }
