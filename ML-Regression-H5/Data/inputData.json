@@ -1,12 +1,12 @@
 {
-  "durationInMonths": 5.0,
+  "durationInMonths": 0.1,
   "isMarried": 0,
   "bsDegree": 1,
   "msDegree": 1,
   "yearsExperience": 2,
-  "ageAtHire": 20,
-  "hasKids": 0,
+  "ageAtHire": 50,
+  "hasKids": 1,
   "withinMonthOfVesting": 0,
   "deskDecorations": 1,
-  "longCommute": 0
+  "longCommute": 1
 }

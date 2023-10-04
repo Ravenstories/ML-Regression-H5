@@ -7,7 +7,7 @@ namespace ML_Regression_H5.ML.Base
         protected readonly MLContext mlContext;
         protected BaseML()
         {
-            mlContext = new MLContext(2);
+            mlContext = new MLContext();
         }
 
 
